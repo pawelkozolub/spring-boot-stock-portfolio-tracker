@@ -27,22 +27,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Role saveRole(Role role) {
-        log.info("Saving new role {} to the database", role.getName());
+        log.info("Saving new role {} to the database", role.getAuthority());
         return roleRepository.save(role);
     }
 
     @Override
     public void addRoleToUser(String username, String roleName) {
         log.info("Adding role {} to user {}", roleName, username);
-        User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(roleName);
-        user.getRoles().add(role);
+        User user = userRepository.findByUsername(username).orElse(null);
+        Role role = roleRepository.findByAuthority(roleName).orElse(null);
+        //user.getAuthorities().add(role);
     }
 
     @Override
     public User getUser(String username) {
         log.info("Fetching user {}", username);
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     @Override
