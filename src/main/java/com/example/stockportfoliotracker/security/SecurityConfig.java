@@ -28,9 +28,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
                         .requestMatchers(antMatcher("/")).permitAll()
+                        .requestMatchers(antMatcher("/admin/**")).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
+                .formLogin(login -> login.defaultSuccessUrl("/home"))
                 .logout(Customizer.withDefaults())
                 .build();
     }
