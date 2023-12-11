@@ -6,6 +6,7 @@ import com.example.stockportfoliotracker.repository.RoleRepository;
 import com.example.stockportfoliotracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,5 +56,17 @@ public class UserServiceImpl implements UserService {
     public List<Role> getRoles() {
         log.info("Fetching all roles");
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Boolean checkIfAdmin(String username) {
+        log.info("Checking ADMIN permissions for {}", username);
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user != null) {
+            for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+                if (grantedAuthority.getAuthority().equals("ADMIN")) return true;
+            }
+        }
+        return false;
     }
 }
