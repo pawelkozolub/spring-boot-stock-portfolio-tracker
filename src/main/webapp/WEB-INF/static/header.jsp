@@ -1,5 +1,5 @@
 <header style="height: 50px; line-height: 1; padding-bottom: 0">
-    <nav style="margin-top: 0; padding-top: 5; padding-bottom: 2">
+    <nav style="margin-top: 0; padding-top: 5px; padding-bottom: 2px">
         <b style="text-align: left">Logged user: <mark>${username}</mark> &emsp;&emsp;&emsp;</b>
         <c:when test="${isAdmin}">
             <a href="/admin">Admin</a>
