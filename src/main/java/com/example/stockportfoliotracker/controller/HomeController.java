@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class HomeController {
     public String home(Model model, Principal principal) {
         model.addAttribute("username", principal.getName());
         model.addAttribute("isAdmin", userService.checkIfAdmin(principal.getName()));
+        model.addAttribute("portfolioList", new ArrayList<Integer>());  // temporary
         return "views/home";
     }
 
