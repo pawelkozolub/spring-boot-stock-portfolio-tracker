@@ -27,11 +27,17 @@ public class Application {
             Role adminRole = roleRepository.save(new Role(null, "ADMIN"));
             Role userRole = roleRepository.save(new Role(null, "USER"));
 
-            Set<Role> roles = new HashSet<>();
-            roles.add(adminRole);
+            Set<Role> roleAdmin = new HashSet<>();
+            roleAdmin.add(adminRole);
 
-            User admin = new User(null, "admin", passwordEncoder.encode("pwd"), roles);
+            User admin = new User(null, "admin", passwordEncoder.encode("pwd"), roleAdmin);
             userRepository.save(admin);
+
+            Set<Role> roleUser = new HashSet<>();
+            roleUser.add(userRole);
+
+            User user = new User(null, "user", passwordEncoder.encode("pwd"), roleUser);
+            userRepository.save(user);
         };
     }
 
