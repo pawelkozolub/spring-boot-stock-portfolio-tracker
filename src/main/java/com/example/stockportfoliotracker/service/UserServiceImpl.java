@@ -64,9 +64,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUsername(username).orElse(null);
         if (user != null) {
             for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
-                if (grantedAuthority.getAuthority().equals("ADMIN")) return true;
+                if (grantedAuthority.getAuthority().equals("ADMIN")) {
+                    log.info("ADMIN permissions available");
+                    return true;
+                }
             }
         }
+        log.info("ADMIN permissions is unavailable");
         return false;
     }
 }
