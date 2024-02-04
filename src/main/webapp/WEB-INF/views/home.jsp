@@ -12,7 +12,7 @@
     <jsp:include page="../static/header.jsp" />
     <%-- Main --%>
     <main>
-        <h2>Available stock portfolios</h2>
+        <h3>Available stock portfolios</h3>
         <c:choose>
             <c:when test="${portfolioList.size() > 0}">
 <%--                <table>--%>
@@ -47,7 +47,9 @@
             </c:otherwise>
         </c:choose>
 
-        <h4>Create a new stock portfolio</h4>
+        <br/>
+        <br/>
+        <h3>Create a new stock portfolio</h3>
 <%--        <form:form method="post" modelAttribute="portfolio">--%>
 <%--            <p>--%>
 <%--                <label>Portfolio name: </label>--%>

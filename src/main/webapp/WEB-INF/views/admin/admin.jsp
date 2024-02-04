@@ -13,7 +13,7 @@
     <%-- Main --%>
     <main>
         <div>
-            <h4>User list</h4>
+            <h3>User list</h3>
             <c:choose>
                 <c:when test="${userList.size() > 0}">
                     <table>
@@ -51,7 +51,7 @@
             <%--    <hr/>--%>
             <br/>
             <br/>
-            <h4>Add User</h4>
+            <h3>Add User</h3>
             <form:form method="post" modelAttribute="user">
                 <p>
                     <label>Name: </label>

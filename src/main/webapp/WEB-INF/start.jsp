@@ -7,7 +7,7 @@
 </head>
 <body>
     <main>
-        <h2>Stock Portfolio Tracker</h2>
+        <h3>Stock Portfolio Tracker</h3>
         <p>
             <a class="button" href="/login">Log in</a><br>
         </p>
