@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -67,5 +68,31 @@ public class AdminController {
         model.addAttribute("isAdmin", true);
         model.addAttribute("user", userRepository.findById(id).orElse(null));
         return "views/admin/view";
+    }
+
+    @GetMapping("/edit")
+    public String editView(@RequestParam Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        model.addAttribute("isAdmin", true);
+        model.addAttribute("user", userRepository.findById(id).orElse(null));
+        List<Role> roleList = roleRepository.findAll();
+        model.addAttribute("roleList", roleList);
+        return "views/admin/edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "views/admin/edit";
+        }
+        userRepository.findById(user.getId()).ifPresent(
+                updateUser -> {
+                    updateUser.setUsername(user.getUsername());
+                    updateUser.setAuthorities((Set<Role>) user.getAuthorities());
+                    updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
+                    userRepository.save(updateUser);
+                }
+        );
+        return "redirect:/admin";
     }
 }
