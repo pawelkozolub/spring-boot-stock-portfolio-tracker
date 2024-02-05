@@ -10,10 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -62,5 +59,13 @@ public class AdminController {
     public String delete(@RequestParam Long id) {
         userRepository.findById(id).ifPresent(userRepository::delete);
         return "redirect:/admin";
+    }
+
+    @GetMapping("/{id}")
+    public String view(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        model.addAttribute("isAdmin", true);
+        model.addAttribute("user", userRepository.findById(id).orElse(null));
+        return "views/admin/view";
     }
 }
