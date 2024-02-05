@@ -13,10 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -47,6 +47,20 @@ public class AdminController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/delete")
+    public String deleteView(@RequestParam Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        model.addAttribute("isAdmin", true);
+        model.addAttribute("user", userRepository.findById(id).orElse(null));
+        return "views/admin/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam Long id) {
+        userRepository.findById(id).ifPresent(userRepository::delete);
         return "redirect:/admin";
     }
 }
