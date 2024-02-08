@@ -1,7 +1,7 @@
 package com.example.stockportfoliotracker.service;
 
-import com.example.stockportfoliotracker.domain.Role;
-import com.example.stockportfoliotracker.domain.User;
+import com.example.stockportfoliotracker.domain.user.Role;
+import com.example.stockportfoliotracker.domain.user.User;
 
 import java.util.List;
 

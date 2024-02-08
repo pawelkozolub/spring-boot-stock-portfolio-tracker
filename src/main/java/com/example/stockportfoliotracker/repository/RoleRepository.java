@@ -1,6 +1,6 @@
 package com.example.stockportfoliotracker.repository;
 
-import com.example.stockportfoliotracker.domain.Role;
+import com.example.stockportfoliotracker.domain.user.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

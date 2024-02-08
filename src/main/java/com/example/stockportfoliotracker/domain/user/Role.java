@@ -1,4 +1,4 @@
-package com.example.stockportfoliotracker.domain;
+package com.example.stockportfoliotracker.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.stockportfoliotracker;
 
-import com.example.stockportfoliotracker.domain.Role;
-import com.example.stockportfoliotracker.domain.User;
+import com.example.stockportfoliotracker.domain.user.Role;
+import com.example.stockportfoliotracker.domain.user.User;
 import com.example.stockportfoliotracker.repository.RoleRepository;
 import com.example.stockportfoliotracker.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
