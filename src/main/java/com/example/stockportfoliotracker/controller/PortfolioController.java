@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -49,4 +50,15 @@ public class PortfolioController {
         return "redirect:/portfolio/home";
     }
 
+    @GetMapping("/delete")
+    public String deleteView(@RequestParam Long id, Model model) {
+        model.addAttribute("portfolio", portfolioRepository.findById(id).orElse(null));
+        return "views/portfolio/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam Long id) {
+        portfolioRepository.findById(id).ifPresent(portfolio -> portfolioRepository.delete(portfolio));
+        return "redirect:/portfolio/home";
+    }
 }
