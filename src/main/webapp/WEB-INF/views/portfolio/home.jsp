@@ -50,15 +50,15 @@
         <br/>
         <br/>
         <h3>Create a new stock portfolio</h3>
-<%--        <form:form method="post" modelAttribute="portfolio">--%>
-<%--            <p>--%>
-<%--                <label>Portfolio name: </label>--%>
-<%--                <form:input path="name"/><form:errors path="name"/><br/>--%>
-<%--                <label>Portfolio description: </label>--%>
-<%--                <form:textarea rows="4" path="description"/><form:errors path="description"/><br/>--%>
-<%--            </p>--%>
-<%--            <input type="submit" value="Create portfolio">--%>
-<%--        </form:form>--%>
+        <form:form method="post" modelAttribute="portfolio">
+            <p>
+                <label>Portfolio name: </label>
+                <form:input path="name"/><form:errors path="name"/><br/>
+                <label>Portfolio description: </label>
+                <form:textarea rows="4" path="description"/><form:errors path="description"/><br/>
+            </p>
+            <input type="submit" value="Create portfolio">
+        </form:form>
     </main>
 
     <%-- Footer --%>

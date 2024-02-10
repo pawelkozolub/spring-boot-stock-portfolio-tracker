@@ -1,5 +1,6 @@
 package com.example.stockportfoliotracker.domain.portfolio;
 
+import com.example.stockportfoliotracker.domain.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -30,6 +31,8 @@ public class Portfolio {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "portfolio_id")
     private List<Transaction> transactions = new ArrayList<>();
-//    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.REMOVE)
-//    private List<Balance> balances = new ArrayList<>();
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.REMOVE)
+    private List<Balance> balances = new ArrayList<>();
+    @ManyToOne
+    private User user;
 }

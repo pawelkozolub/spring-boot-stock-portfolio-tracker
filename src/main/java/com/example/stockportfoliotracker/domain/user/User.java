@@ -1,5 +1,6 @@
 package com.example.stockportfoliotracker.domain.user;
 
+import com.example.stockportfoliotracker.domain.portfolio.Portfolio;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,9 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -34,6 +33,15 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "")}
     )
     private Set<Role> authorities = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Portfolio> portfolios = new ArrayList<>();
+
+    public User(Long id, String username, String password, Set<Role> authorities) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
