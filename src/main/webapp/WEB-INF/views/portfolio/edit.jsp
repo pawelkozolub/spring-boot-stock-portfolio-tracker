@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>SPT: Portfolio Delete</title>
+    <title>SPT: Portfolio Edit</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 <body>
@@ -13,13 +13,17 @@
     <%-- Main --%>
     <main>
         <div>
-            <p><a href="<c:out value="/portfolio"/>">Back to portfolio selection</a></p>
-            <h3>Delete portfolio</h3>
-            <h4><mark>${portfolio.name}</mark> with all its data to be deleted!</h4>
-            <p>Please confirm or <a href="<c:out value="/portfolio/home"/>">Cancel</a><p>
+            <p><a href="<c:out value="/portfolio/home"/>">Back to portfolio selection</a></p>
+            <h3>Update portfolio information</h3>
             <form:form method="post" modelAttribute="portfolio">
-                <form:hidden path="id"/>
-            <form:button>DELETE</form:button>
+                <p>
+                    <form:hidden path="id"/>
+                    <label>Portfolio name: </label>
+                    <form:input path="name"/><form:errors path="name"/><br/>
+                    <label>Portfolio description: </label>
+                    <form:textarea rows="4" path="description"/><form:errors path="description"/><br/>
+                </p>
+                <input type="submit" value="Edit portfolio">
             </form:form>
         </div>
     </main>

@@ -61,4 +61,25 @@ public class PortfolioController {
         portfolioRepository.findById(id).ifPresent(portfolio -> portfolioRepository.delete(portfolio));
         return "redirect:/portfolio/home";
     }
+
+    @GetMapping("/edit")
+    public String editView(@RequestParam Long id, Model model) {
+        model.addAttribute("portfolio", portfolioRepository.findById(id).orElse(null));
+        return "views/portfolio/edit";
+    }
+
+    @PostMapping("edit")
+    public String edit(@Valid Portfolio portfolio, BindingResult result) {
+        if (result.hasErrors()) {
+            return "views/portfolio/edit";
+        }
+        portfolioRepository.findById(portfolio.getId()).ifPresent(
+                updatePortfolio -> {
+                    updatePortfolio.setName(portfolio.getName());
+                    updatePortfolio.setDescription(portfolio.getDescription());
+                    portfolioRepository.save(updatePortfolio);
+                }
+        );
+        return "redirect:/portfolio/home";
+    }
 }
