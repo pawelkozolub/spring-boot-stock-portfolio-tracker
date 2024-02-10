@@ -7,7 +7,7 @@
                 <a href="/admin">Admin</a>
             </c:when>
         </c:choose>
-        <a type="button" href="/home">Home</a>
+        <a type="button" href="/portfolio/home">Home</a>
         <a type="button" href="/logout">Logout</a>
     </nav>
 </header>

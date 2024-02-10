@@ -58,7 +58,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <p><a href="<c:out value="/admin"/>">Back</a><p>
+<%--        <p><a href="<c:out value="/admin"/>">Back</a><p>--%>
     </main>
     <%-- Footer --%>
     <jsp:include page="../../static/footer.jsp" />

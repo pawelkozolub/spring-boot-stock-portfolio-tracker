@@ -12,22 +12,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@RequestMapping("/portfolio")
 @RequiredArgsConstructor
 public class PortfolioController {
 
     private final UserService userService;
     private final UserRepository userRepository;
     private final PortfolioRepository portfolioRepository;
-
-    @GetMapping("/")
-    public String start() {
-        return "start";
-    }
 
     @GetMapping("/home")
     public String home(Model model, Principal principal) {
@@ -49,7 +46,7 @@ public class PortfolioController {
         }
         portfolio.setUser(userRepository.findByUsername(principal.getName()).orElse(null));
         portfolioRepository.save(portfolio);
-        return "redirect:/home";
+        return "redirect:/portfolio/home";
     }
 
 }

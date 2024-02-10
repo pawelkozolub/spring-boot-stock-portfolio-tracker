@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers(antMatcher("/admin/**")).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(login -> login.defaultSuccessUrl("/home", true))
+                .formLogin(login -> login.defaultSuccessUrl("/portfolio/home", true))
                 .logout(Customizer.withDefaults())
                 .build();
     }
