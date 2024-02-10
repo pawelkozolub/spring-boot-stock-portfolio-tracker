@@ -37,7 +37,7 @@ public class PortfolioController {
         model.addAttribute("username", principal.getName());
         User user = userRepository.findByUsername(principal.getName()).orElse(null);
         model.addAttribute("user", user);
-        List<Portfolio> portfolioList = portfolioRepository.findAll();
+        List<Portfolio> portfolioList = portfolioRepository.findAllByUser(user);
         model.addAttribute("portfolioList", portfolioList);
         Portfolio portfolio = new Portfolio();
         model.addAttribute("portfolio", portfolio);
