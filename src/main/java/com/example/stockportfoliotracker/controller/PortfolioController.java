@@ -1,19 +1,19 @@
 package com.example.stockportfoliotracker.controller;
 
+import com.example.stockportfoliotracker.domain.portfolio.Balance;
 import com.example.stockportfoliotracker.domain.portfolio.Portfolio;
 import com.example.stockportfoliotracker.domain.user.User;
+import com.example.stockportfoliotracker.repository.BalanceRepository;
 import com.example.stockportfoliotracker.repository.PortfolioRepository;
 import com.example.stockportfoliotracker.repository.UserRepository;
+import com.example.stockportfoliotracker.service.PortfolioService;
 import com.example.stockportfoliotracker.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -26,6 +26,8 @@ public class PortfolioController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final PortfolioRepository portfolioRepository;
+    private final BalanceRepository balanceRepository;
+    private final PortfolioService portfolioService;
 
     @GetMapping("/home")
     public String home(Model model, Principal principal) {
@@ -81,5 +83,15 @@ public class PortfolioController {
                 }
         );
         return "redirect:/portfolio/home";
+    }
+
+    @GetMapping("/{id}")
+    public String view(@PathVariable(name = "id") Long id, Model model) {
+        Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
+        List<Balance> balances = balanceRepository.findAllByPortfolioOrderByStock(portfolio);
+        model.addAttribute("portfolio", portfolio);
+        model.addAttribute("balanceList", balances);
+        model.addAttribute("summary", portfolioService.getSummary(balances));
+        return "views/portfolio/view";
     }
 }
