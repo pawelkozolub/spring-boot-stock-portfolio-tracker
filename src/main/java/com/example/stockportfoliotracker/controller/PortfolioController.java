@@ -2,6 +2,7 @@ package com.example.stockportfoliotracker.controller;
 
 import com.example.stockportfoliotracker.domain.portfolio.Balance;
 import com.example.stockportfoliotracker.domain.portfolio.Portfolio;
+import com.example.stockportfoliotracker.domain.portfolio.Transaction;
 import com.example.stockportfoliotracker.domain.user.User;
 import com.example.stockportfoliotracker.repository.BalanceRepository;
 import com.example.stockportfoliotracker.repository.PortfolioRepository;
@@ -97,4 +98,48 @@ public class PortfolioController {
         model.addAttribute("summary", portfolioService.getSummary(balances));
         return "views/portfolio/view";
     }
-}
+
+    @GetMapping("/{portfolioId}/buy")       // portfolioId to be used instead id > Spring confuses it with stock.id
+    public String buyStockView(@PathVariable(name = "portfolioId") Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
+        model.addAttribute("portfolio", portfolio);
+        model.addAttribute("transaction", new Transaction());
+        return "views/portfolio/stock-buy";
+    }
+
+    @PostMapping("/{portfolioId}/buy")       // portfolioId to be used instead id > Spring confuses it with stock.id
+    public String buyStock(@PathVariable(name = "portfolioId") Long id, @Valid Transaction transaction, BindingResult result) {
+        if (result.hasErrors()) {
+            return "views/portfolio/stock-buy";
+        }
+        Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
+        portfolioService.makeBuyPortfolioTransaction(portfolio, transaction);
+        return "redirect:/portfolio/" + id;
+    }
+
+    @GetMapping("/{portfolioId}/sell")      // portfolioId to be used instead id > Spring confuses it with stock.id
+    public String sellStockView(@PathVariable(name = "portfolioId") Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
+        List<Balance> balances = balanceRepository.findAllByPortfolioOrderByStock(portfolio);
+        if (balances.isEmpty()) {
+            return "redirect:/portfolio/" + id;
+        }
+        model.addAttribute("portfolio", portfolio);
+        model.addAttribute("transaction", new Transaction());
+        model.addAttribute("balanceList", balances);
+        return "views/portfolio/stock-sell";
+    }
+
+    @PostMapping("/{portfolioId}/sell")      // portfolioId to be used instead id > Spring confuses it with stock.id
+    public String sellStock(@PathVariable(name = "portfolioId") Long id, @Valid Transaction transaction, BindingResult result) {
+        if (result.hasErrors()) {
+            return "views/portfolio/stock-sell";
+        }
+        Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
+        portfolioService.makeSellPortfolioTransaction(portfolio, transaction);
+        return "redirect:/portfolio/" + id;
+    }
+
+ }
