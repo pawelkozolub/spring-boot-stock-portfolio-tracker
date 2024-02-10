@@ -29,7 +29,7 @@ public class PortfolioController {
     private final BalanceRepository balanceRepository;
     private final PortfolioService portfolioService;
 
-    @GetMapping("/home")
+    @GetMapping
     public String home(Model model, Principal principal) {
         model.addAttribute("isAdmin", userService.checkIfAdmin(principal.getName()));
         model.addAttribute("username", principal.getName());
@@ -39,21 +39,22 @@ public class PortfolioController {
         model.addAttribute("portfolioList", portfolioList);
         Portfolio portfolio = new Portfolio();
         model.addAttribute("portfolio", portfolio);
-        return "views/portfolio/home";
+        return "views/portfolio/home-list";
     }
 
-    @PostMapping("/home")
+    @PostMapping
     public String save(@Valid Portfolio portfolio, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
-            return "views/portfolio/home";
+            return "views/portfolio/home-list";
         }
         portfolio.setUser(userRepository.findByUsername(principal.getName()).orElse(null));
         portfolioRepository.save(portfolio);
-        return "redirect:/portfolio/home";
+        return "redirect:/portfolio";
     }
 
     @GetMapping("/delete")
-    public String deleteView(@RequestParam Long id, Model model) {
+    public String deleteView(@RequestParam Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         model.addAttribute("portfolio", portfolioRepository.findById(id).orElse(null));
         return "views/portfolio/delete";
     }
@@ -61,11 +62,12 @@ public class PortfolioController {
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
         portfolioRepository.findById(id).ifPresent(portfolio -> portfolioRepository.delete(portfolio));
-        return "redirect:/portfolio/home";
+        return "redirect:/portfolio";
     }
 
     @GetMapping("/edit")
-    public String editView(@RequestParam Long id, Model model) {
+    public String editView(@RequestParam Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         model.addAttribute("portfolio", portfolioRepository.findById(id).orElse(null));
         return "views/portfolio/edit";
     }
@@ -82,11 +84,12 @@ public class PortfolioController {
                     portfolioRepository.save(updatePortfolio);
                 }
         );
-        return "redirect:/portfolio/home";
+        return "redirect:/portfolio";
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable(name = "id") Long id, Model model) {
+    public String view(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         Portfolio portfolio = portfolioRepository.findById(id).orElse(null);
         List<Balance> balances = balanceRepository.findAllByPortfolioOrderByStock(portfolio);
         model.addAttribute("portfolio", portfolio);

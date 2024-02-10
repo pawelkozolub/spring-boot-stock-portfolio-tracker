@@ -16,7 +16,7 @@
             <p><a href="<c:out value="/portfolio"/>">Back to portfolio selection</a></p>
             <h3>Delete portfolio</h3>
             <h4><mark>${portfolio.name}</mark> with all its data to be deleted!</h4>
-            <p>Please confirm or <a href="<c:out value="/portfolio/home"/>">Cancel</a><p>
+            <p>Please confirm or <a href="<c:out value="/portfolio"/>">Cancel</a><p>
             <form:form method="post" modelAttribute="portfolio">
                 <form:hidden path="id"/>
             <form:button>DELETE</form:button>

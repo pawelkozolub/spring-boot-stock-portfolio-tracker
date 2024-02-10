@@ -13,7 +13,7 @@
     <%-- Main --%>
     <main>
         <div>
-            <p><a href="<c:out value="/portfolio/home"/>">Back to portfolio selection</a></p>
+            <p><a href="<c:out value="/portfolio"/>">Back to portfolio selection</a></p>
             <h3>Update portfolio information</h3>
             <form:form method="post" modelAttribute="portfolio">
                 <p>
