@@ -14,6 +14,6 @@
     </main>
 
     <%-- Footer --%>
-    <jsp:include page="./static/footer.jsp" />
+    <jsp:include page="static/footer.jsp" />
 </body>
 </html>
